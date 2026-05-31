@@ -1,0 +1,269 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: system-ui, sans-serif;
+    background: linear-gradient(to left, #000000, #7a3c0ae0,  #7a3c0ae2, #000000);
+
+    padding: 40px;
+    color: #e8ddd0;
+}
+
+
+.banner {
+    position: relative;
+    height: 220px;
+    background-image: url('https://img.magnific.com/fotos-gratis/trabalhador-de-servico-de-carro-muscular-reparando-o-veiculo_146671-19605.jpg?semt=ais_hybrid&w=740&q=80');
+    background-size: cover;
+    background-position: center;
+    border-radius: 16px;
+    margin-bottom: 32px;
+}
+
+.banner-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    border-radius: 16px;
+}
+
+.banner-content {
+    font-size: 100px;
+    position: absolute;
+    margin-top: 100px;
+    margin-left: 100px;
+}
+
+.banner-content .clientes-title {
+    font-size: 32px;
+    font-weight: 600;
+    color: #ffffff;
+
+}
+
+.banner-content .clientes-subtitle {
+    font-size: 15px;
+    color: #ff8411;
+    margin-top: 6px;
+}
+.clientes-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 52px;
+  letter-spacing: 2px;
+  color: #f5f0ea;
+  line-height: 1;
+}
+
+.clientes-subtitle {
+  font-size: 13px;
+  color: #dc6414;
+  margin-top: 4px;
+  letter-spacing: 0.3px;
+}
+
+.form-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 16px;
+  align-items: flex-end;
+  background: #181818;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 30px;
+  margin-left: 17px ;
+  margin-right: 17px ;
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.campo label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.campo input {
+  background: #111;
+  border: 1px solid #2a2a2a;
+  border-radius: 8px;
+  padding: 11px 14px;
+  font-size: 14px;
+  color: #e8e0d5;
+  font-family: 'DM Sans', sans-serif;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.campo input::placeholder {
+  color: #444;
+}
+
+.campo input:focus {
+  border-color: #dc6414;
+}
+
+#botao-cadastrar {
+  background: #dc6414;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 11px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, transform 0.1s;
+}
+
+#botao-cadastrar:hover {
+  background: #c25510;
+}
+
+#botao-cadastrar:active {
+  transform: scale(0.97);
+}
+
+#tabela-clientes {
+  width: calc(100% - 64px);
+  margin: 0 32px 32px;
+  border-collapse: collapse;
+  background: #181818;
+  border: 1px solid #2a2a2a;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+#tabela-clientes thead {
+  background: #111;
+}
+
+#tabela-clientes thead th {
+  padding: 12px 20px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2.5px;
+  text-transform: uppercase;
+  color: #555;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+#tabela-clientes tbody tr {
+  border-bottom: 1px solid #1e1e1e;
+  transition: background 0.15s;
+}
+
+#tabela-clientes tbody tr{
+  border-bottom: none;
+}
+
+#tabela-clientes tbody tr:hover {
+  background: #1d1d1d;
+}
+
+#tabela-clientes tbody td {
+  padding: 0 20px;
+  height: 56px;
+  font-size: 14px;
+  color: #e8e0d5;
+  vertical-align: middle;
+}
+
+#tabela-clientes tbody td{
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 15px;
+  letter-spacing: 1px;
+  color: #dc6414;
+}
+
+#tabela-clientes tbody td {
+  font-size: 13px;
+  color: #888;
+  font-variant-numeric: tabular-nums;
+}
+
+
+.botao-editar,
+.botao-apagar {
+  background: transparent;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: #aaa;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  margin-right: 6px;
+}
+
+.botao-editar:hover {
+  border-color: #dc6414;
+  color: #dc6414;
+}
+
+.botao-apagar:hover {
+  border-color: #e24b4a;
+  color: #e24b4a;
+  background: rgba(226, 75, 74, 0.06);
+}
+
+  #tabela-clientes {
+    width: calc(100% - 32px);
+    margin: 0 16px 24px;
+  }
+
+  .banner {
+    padding: 20px 16px;
+  }
+
+  .clientes-title {
+    font-size: 40px;
+  }
+
+  dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+dialog {
+  border: none;
+  border-radius: 8px;
+  padding: 0;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  max-width: 400px;
+}
+
+
+.modal-conteudo {
+  padding: 20px;
+  text-align: center;
+  align-items: center;
+  font-family: sans-serif;
+}
+
+.modal-conteudo h2 {
+  margin-top: 0;
+}
+
+.modal-conteudo button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

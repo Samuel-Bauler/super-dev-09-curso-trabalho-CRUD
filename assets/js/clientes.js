@@ -1,0 +1,196 @@
+const corpoTabela = document.getElementById("tabela-clientes");
+const urlBase = "https://api.franciscosensaulas.com/api/v1/mecanica/clientes"
+
+const botaoCadastrar = document.getElementById("botao-cadastrar");
+botaoCadastrar.addEventListener("click", validarECadastro);
+
+const campoNome = document.getElementById("nome")
+const campoTelefone = document.getElementById("telefone")
+
+
+let idParaEditar = -1;
+
+function abrirTelaIndex() {
+    window.location.href = "index.html"
+}
+
+function validarECadastro(evento){
+    evento.preventDefault();
+
+    console.log(evento);
+
+    const nome = campoNome.value.trim();
+    const telefone = campoTelefone.value.trim();
+
+    if(nome.length < 4){
+        alert("Cliente deve conter no mi­nimo 4 caracteres");
+
+        return;
+    }
+
+    if (idParaEditar === -1) {
+        cadastrarCliente();
+    } else {
+        editarCliente(nome, telefone);
+    }
+}
+
+function limparCampos() {
+    campoNome.value = "";
+    campoTelefone.value = "";
+
+    idParaEditar = -1;
+}
+
+function listarClientes() {
+
+    corpoTabela.innerHTML = "";
+
+    fetch(urlBase)
+        .then(response => response.json())
+        .then(clientes => {
+            for (let i = 0; i < clientes.length; i++) {
+                const cliente = clientes[i];
+                criarLinha(cliente);
+            }
+            adicionarCliqueBotoesLinhas()
+        })
+        .catch(error => {
+            console.error("Erro ao listar clientes: " + error);
+
+            alert("Ocorreu um erro ao tentar listar os clientes");
+        })
+}
+
+function criarLinha(cliente) {
+    const linha = ` <tr>
+    <td>${cliente.id}</td>
+    <td>${cliente.nome}</td>
+    <td>${cliente.telefone}</td>
+    <td>
+        <button class="botao-editar" cliente-id="${cliente.id}">Editar</button>
+        <button class="botao-apagar" cliente-id="${cliente.id}">Apagar</button>
+    </td>
+</tr>`
+
+    corpoTabela.innerHTML = corpoTabela.innerHTML + linha;
+}
+
+function cadastrarCliente(){
+    const url = "https://api.franciscosensaulas.com/api/v1/mecanica/clientes"
+
+    const nome = campoNome.value.trim();
+    const telefone = campoTelefone.value.trim();
+    
+    const dados = {
+        nome: nome,
+        telefone: telefone
+    }
+
+    fetch(url, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(dados)
+    })
+    .then(response => response.json())
+    .then(dados => {
+        listarClientes();
+        alert("cliente cadastrado com sucesso");
+        limparCampos()
+    })
+    .catch(error => {
+        alert("Algo deu errado");
+    })
+}
+
+
+function adicionarCliqueBotoesLinhas() {
+    const botoesApagar = document.getElementsByClassName("botao-apagar");
+    const modal = document.getElementById("modal");
+
+    for (let i = 0; i < botoesApagar.length; i++) {
+        const botaoApagar = botoesApagar[i];
+
+        botaoApagar.addEventListener('click', () => {
+            modal.showModal();
+        });
+
+        fecharModal.addEventListener('click', () => {
+            modal.close(); 
+        });
+    }
+
+    const botoesEditar = document.getElementsByClassName("botao-editar");
+
+    for (let i = 0; i < botoesEditar.length; i++) {
+        const botaoEditar = botoesEditar[i];
+
+        botaoEditar.addEventListener("click", preencherCamposParaEditar);
+    }
+}
+    
+function editarCliente(nome, telefone) {
+    const url = `${urlBase}/${idParaEditar}`;
+
+    const dados = {
+        nome: nome,
+        telefone: telefone
+    }
+
+    fetch(url, {
+        method: "PUT",
+
+        headers: {
+            "Content-Type": "application/json"
+        },
+
+        body: JSON.stringify(dados)
+    })
+        .then(response => {
+            if (response.status === 204 || response.status === 200) {
+                alert("Cliente atualizado com sucesso");
+
+                limparCampos();
+
+                listarClientes();
+            } else if (response.status === 404) {
+                alert("NÃ£o foi possi­vel encontrar o cliente");
+            } else {
+                alert("NÃ£o foi possi­vel atualizar o cliente");
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao editar cliente: " + error);
+
+            alert("Ocorreu um erro ao tentar alterar o cliente");
+        })
+}
+
+function preencherCamposParaEditar(evento) {
+    const botaoEditar = evento.target;
+
+    idParaEditar = botaoEditar.getAttribute("cliente-id");
+
+    const url = `${urlBase}/${idParaEditar}`;
+
+    fetch(url)
+        .then(response => response.json())
+
+        .then(cliente => {
+            campoNome.value = cliente.nome;
+            campoTelefone.value = cliente.telefone;
+        })
+        .catch(error => {
+            console.error("Erro ao buscar cliente para ediÃ§Ã£o: " + error);
+
+            alert("Ocorreu um erro ao tentar buscar o cliente");
+        })
+}
+
+listarClientes();
+
+fecharModal.addEventListener('click', () => {
+  modal.close(); // Método nativo para fechar modais
+});
