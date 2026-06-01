@@ -1,76 +1,78 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes</title>
-    <link rel="stylesheet" href="assets/css/clientes.css">
-</head>
-<body>
-    <div class="banner">
-        <div class="banner-overlay"></div>
-            <div class="banner-content">
-                <h1 class="clientes-title">Clientes</h1>
-                <p class="clientes-subtitle">Cadastre e acompanhe os clientes da mecânica.</p>
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Clientes</title>
+        <link rel="stylesheet" href="assets/css/clientes.css">
+    </head>
+    <body>
+        <div id="all">
+            <div class="banner">
+                <div class="banner-overlay"></div>
+                    <div class="banner-content">
+                        <h1 class="clientes-title">Clientes</h1>
+                        <p class="clientes-subtitle">Cadastre e acompanhe os clientes da mecânica.</p>
+                    </div>
             </div>
-    </div>
-
-        </div>
-
-        <div class="form-card">
-            <div class="campo">
-                <div>
-                    <label for="nome">Nome</label>
+        
                 </div>
-                <div>
-                    <input type="text" id="nome" name="nome" placeholder="Nome do cliente">
+        
+                <div class="form-card">
+                    <div class="campo">
+                        <div>
+                            <label for="nome">Nome</label>
+                        </div>
+                        <div>
+                            <input type="text" id="nome" name="nome" placeholder="Nome do cliente">
+                        </div>
+                    </div>
+        
+                    <div class="campo">
+                        <div>
+                            <label for="telefone">Telefone</label>
+                        </div>
+                        <input type="tel" id="telefone" name="telefone" placeholder="Telefone do cliente">
+                    </div>
+        
+                    <button id="botao-cadastrar">Cadastrar cliente</button>
                 </div>
+        
+                <table id="tabela-clientes">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Telefone</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+        
+                    <tbody id="clientes">
+                        <tr>
+                            <td>1</td>
+                            <td>Alimentacao</td>
+                            <td>(00) 00000-0000</td>
+                            <td>
+                                <button class="botoes botao-editar">Editar</button>
+                                <button class="botoes botao-apagar">Apagar</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-
-            <div class="campo">
-                <div>
-                     <label for="telefone">Telefone</label>
-                </div>
-                <input type="tel" id="telefone" name="telefone" placeholder="Telefone do cliente">
-            </div>
-
-            <button id="botao-cadastrar">Cadastrar cliente</button>
-        </div>
-
-        <table id="tabela-clientes">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nome</th>
-                    <th>Telefone</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-
-            <tbody id="clientes">
-                <tr>
-                    <td>1</td>
-                    <td>Alimentacao</td>
-                    <td>(00) 00000-0000</td>
-                    <td>
-                        <button class="botao-editar">Editar</button>
-                        <button class="botao-apagar">Apagar</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
-    <dialog id="modal">
-        <div class="modal-conteudo">
-            <h2>DESEJA APAGAR O CLIENTE?</h2>
-            <p>Isso apagará permanentemente o cliente da lista</p>
             
-            <button id="fechar-modal">Cancelar</button>
-            <button id="confirmar-modal">Confirmar</button>
+            <dialog id="modal">
+                <div class="modal-conteudo">
+                    <h2>DESEJA APAGAR O CLIENTE?</h2>
+                    <p>Isso apagará permanentemente o cliente da lista</p>
+                    
+                    <button id="fechar-modal">Cancelar</button>
+                    <button id="confirmar-modal">Confirmar</button>
+                </div>
+            </dialog>
+        
+            <script src="assets/js/clientes.js"></script>
         </div>
-    </dialog>
-
-    <script src="assets/js/clientes.js"></script>
-</body>
-</html>
+    </body>
+    </html>
