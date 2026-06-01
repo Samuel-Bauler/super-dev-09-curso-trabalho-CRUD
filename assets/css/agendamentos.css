@@ -6,7 +6,7 @@
 
 body {
   font-family: system-ui, sans-serif;
-  background: linear-gradient(to bottom, #000000 0%, #363535 40%, #3f3f3f 60%, #000000 100%);
+  background: linear-gradient(to left, #000000, #202020e0, #232323e2, #000000);
   min-height: 100vh;
   padding: 40px;
   color: #e8ddd0;
