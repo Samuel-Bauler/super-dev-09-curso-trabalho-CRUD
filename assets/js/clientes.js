@@ -1,4 +1,4 @@
-const corpoTabela = document.getElementById("tabela-clientes");
+const corpoTabela = document.getElementById("clientes");
 const urlBase = "https://api.franciscosensaulas.com/api/v1/mecanica/clientes"
 
 const botaoCadastrar = document.getElementById("botao-cadastrar");
