@@ -38,6 +38,7 @@ function validarECadastro(evento){
     }
     if(telefone.length < 1){
         alert("Telefone não pode estar vazio")
+        return;
     }
 
     if (idParaEditar === -1) {
