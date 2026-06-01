@@ -83,16 +83,21 @@ function listarAgendamentos() {
 }
 
 function criarLinha(agendamento) {
-    var nomeCliente = "";
+    let nomeCliente = "";
     if (agendamento.cliente != null) {
         nomeCliente = agendamento.cliente.nome;
+    }
+
+    let dataExibicao = "";
+    if (agendamento.dataAgendamento != null) {
+        dataExibicao = agendamento.dataAgendamento.substring(0, 10);
     }
 
     const linha = `<tr>
     <td>${agendamento.id}</td>
     <td>${nomeCliente}</td>
     <td>${agendamento.descricao}</td>
-    <td>${agendamento.dataAgendamento}</td>
+    <td>${dataExibicao}</td>
     <td>
         <button class="botao-editar" agendamento-id="${agendamento.id}">Editar</button>
         <button class="botao-apagar" agendamento-id="${agendamento.id}">Apagar</button>
@@ -130,10 +135,10 @@ function cadastrarAgendamento() {
             }
 
             const cliente = campoCliente.value.trim();
-            const descricao = campoDescricao.value.trim();
-            const data = campoData.value.trim();
-            const dataISO = new Date(Date.UTC(+data.substring(0,4), +data.substring(5,7) - 1, +data.substring(8,10), 0, 0, 0));
-            const dataFormatada = dataISO.toISOString();
+                        const descricao = campoDescricao.value.trim();
+                        const data = campoData.value.trim();
+                        const dataISO = new Date(Date.UTC(+data.substring(0,4), +data.substring(5,7) - 1, +data.substring(8,10), 0, 0, 0));
+                        const dataFormatada = dataISO.toISOString();
 
             const dados = {
                 dataAgendamento: dataFormatada,
@@ -149,11 +154,8 @@ function cadastrarAgendamento() {
                 body: JSON.stringify(dados)
             })
                 .then(response => {
-                    if (response.ok) {
+                    if (response === 201) {
                         return response.json();
-                    } else {
-                        console.error("Response status: " + response.status);
-                        throw new Error("Response not ok");
                     }
                 })
                 .then(dados => {
@@ -234,19 +236,19 @@ function editarAgendamento(cliente, descricao, data) {
             let idDoCliente = 0;
 
             for (let i = 0; i < clientes.length; i++) {
-                const c = clientes[i];
-                if (c.nome === cliente) {
-                    idDoCliente = c.id;
+                const cliente = clientes[i];
+                if (cliente.nome === cliente) {
+                    idDoCliente = cliente.id;
                 }
             }
 
             const url = `${urlBase}/${idParaEditar}`;
 
             const dados = {
-                clienteId: idDoCliente,
-                descricao: descricao,
-                dataAgendamento: new Date(Date.UTC(+data.substring(0,4), +data.substring(5,7) - 1, +data.substring(8,10), 0, 0, 0)).toISOString()
-            };
+                            clienteId: idDoCliente,
+                            descricao: descricao,
+                            dataAgendamento: new Date(Date.UTC(+data.substring(0,4), +data.substring(5,7) - 1, +data.substring(8,10), 0, 0, 0)).toISOString()
+                        };
 
             fetch(url, {
                 method: "PUT",
@@ -256,11 +258,8 @@ function editarAgendamento(cliente, descricao, data) {
                 body: JSON.stringify(dados)
             })
                 .then(response => {
-                    if (response.ok) {
+                    if (response === 201) {
                         return response.json();
-                    } else {
-                        console.error("Response status: " + response.status);
-                        throw new Error("Response not ok");
                     }
                 })
                 .then(() => {
@@ -291,9 +290,9 @@ function preencherCamposParaEditar(evento) {
                 campoCliente.value = "";
             }
             campoDescricao.value = agendamento.descricao;
-            var dataISO = agendamento.dataAgendamento;
-            var dataFormatada = dataISO.substring(0, 10);
-            campoData.value = dataFormatada;
+                        if (agendamento.dataAgendamento != null) {
+                            campoData.value = agendamento.dataAgendamento.substring(0, 10);
+                        }
         })
         .catch(error => {
             console.error("Erro ao buscar agendamento para edição: " + error);
