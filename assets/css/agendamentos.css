@@ -6,11 +6,11 @@
 
 body {
   font-family: system-ui, sans-serif;
-  background: linear-gradient(to left, #000000, #202020e0, #232323e2, #000000);
+  background: linear-gradient(to bottom, #000000 0%, #363535 40%, #3f3f3f 60%, #000000 100%);
+  min-height: 100vh;
   padding: 40px;
   color: #e8ddd0;
 }
-
 
 .banner {
   position: relative;
@@ -30,47 +30,31 @@ body {
 }
 
 .banner-content {
-  font-size: 100px;
   position: absolute;
-  margin-top: 100px;
-  margin-left: 100px;
+  bottom: 32px;
+  left: 40px;
 }
 
-.banner-content .clientes-title {
+.agendamentos-title {
   font-size: 32px;
-  font-weight: 600;
+  font-weight: 700;
   color: #ffffff;
-
+  letter-spacing: 1px;
 }
 
-.banner-content .clientes-subtitle {
-  font-size: 15px;
-  color: #ff8411;
-  margin-top: 6px;
-}
-
-.clientes-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 52px;
-  letter-spacing: 2px;
-  color: #6b3d04;
-  line-height: 1;
-}
-
-.clientes-subtitle {
-  font-size: 13px;
+.agendamentos-subtitle {
+  font-size: 14px;
   color: #dc6414;
-  margin-top: 4px;
-  letter-spacing: 0.3px;
+  margin-top: 6px;
 }
 
 .form-card {
   display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto;
   gap: 16px;
   align-items: flex-end;
   background: #181818;
-  box-shadow: 0 0 5px 5px rgb(127, 83, 1);
+  border: 1px solid #2a2a2a;
   border-radius: 12px;
   padding: 24px;
   margin-bottom: 30px;
@@ -89,7 +73,7 @@ body {
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: #ff8411;
+  color: #888;
 }
 
 .campo input {
@@ -98,11 +82,12 @@ body {
   border-radius: 8px;
   padding: 11px 14px;
   font-size: 14px;
-  color: #ffffff;
-  font-family: 'DM Sans', sans-serif;
+  color: #e8e0d5;
+  font-family: system-ui, sans-serif;
   outline: none;
   transition: border-color 0.2s;
   width: 100%;
+  appearance: none;
 }
 
 .campo input::placeholder {
@@ -113,7 +98,7 @@ body {
   border-color: #dc6414;
 }
 
-#botao-cadastrar {
+#botao-agendar {
   background: #dc6414;
   color: #fff;
   border: none;
@@ -121,37 +106,36 @@ body {
   padding: 11px 22px;
   font-size: 14px;
   font-weight: 600;
-  font-family: 'DM Sans', sans-serif;
+  font-family: system-ui, sans-serif;
   cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.15s, transform 0.1s;
+  transition: background 0.15s, transform 0.4s;
 }
 
-#botao-cadastrar:hover {
+#botao-agendar:hover {
   background: #c25510;
+  transform: scale(1.05);
 }
 
-#botao-cadastrar:active {
+#botao-agendar:active {
   transform: scale(0.97);
 }
 
-#tabela-clientes {
-  width: calc(100% - 64px);
-  margin: 0 32px 32px;
+#tabela-agendamentos {
+  width: 100%;
+  margin: 0 16px 24px;
   border-collapse: collapse;
   background: #181818;
   border: 1px solid #2a2a2a;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 0 5px 5px rgb(81, 81, 81);
 }
 
-#tabela-clientes thead {
+#tabela-agendamentos thead tr{
   background: #111;
 }
 
-#tabela-clientes thead th {
-  padding: 12px 20px;
+#tabela-agendamentos thead th {
+  padding: 12px 16px;
   text-align: left;
   font-size: 10px;
   font-weight: 600;
@@ -161,26 +145,39 @@ body {
   border-bottom: 1px solid #2a2a2a;
 }
 
-#tabela-clientes tbody tr {
+#tabela-agendamentos tbody tr {
   border-bottom: 1px solid #1e1e1e;
   transition: background 0.15s;
-
 }
 
-#tabela-clientes tbody tr {
+#tabela-agendamentos tbody tr {
   border-bottom: none;
 }
 
-#tabela-clientes tbody tr:hover {
-  background: #434343;
+#tabela-agendamentos tbody tr:hover {
+  background: #1d1d1d;
 }
 
-#tabela-clientes tbody td {
-  padding: 0 20px;
-  height: 56px;
-  font-size: 14px;
-  color: #e8e0d5;
+#tabela-agendamentos tbody td {
+  padding: 0 16px;
+  height: 54px;
+  font-size: 13px;
+  color: #888;
   vertical-align: middle;
+}
+
+.col-id {
+  color: #555 ;
+  font-variant-numeric: tabular-nums;
+}
+
+.col-nome {
+  color: #e8e0d5 ;
+  font-weight: 500;
+}
+
+.col-servico {
+  color: #dc6414 ;
 }
 
 
@@ -194,92 +191,18 @@ body {
   font-weight: 500;
   color: #aaa;
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  font-family: system-ui, sans-serif;
   transition: border-color 0.15s, color 0.15s, background 0.15s;
   margin-right: 6px;
 }
 
-.botao-editar{
+.botao-editar:hover {
   border-color: #dc6414;
-  background-color: #dc6414;
-  color: black;
+  color: #dc6414;
 }
 
-.botao-apagar{
-  background-color: red;
-  color: black;
+.botao-apagar:hover {
+  border-color: #e24b4a;
+  color: #e24b4a;
+  background: rgba(226, 75, 74, 0.06);
 }
-
-#tabela-clientes {
-  width: calc(100% - 32px);
-  margin: 0 16px 24px;
-}
-
-.banner {
-  padding: 20px 16px;
-}
-
-.clientes-title {
-  font-size: 40px;
-}
-
-dialog::backdrop {
-  background-color: rgba(0, 0, 0, 0.65);
-}
-
-dialog {
-  border: none;
-  height: 40vh;
-  border-radius: 8px;
-  padding: 0;
-  position: fixed;
-  inset: 0;
-  margin: auto;
-  background: #181818;
-  color: #e8e0d5;
-  box-shadow: 0 3px 7px 7px #d7b408;
-  width: 60%;
-  width: 90%;
-  max-width: 400px;
-}
-
-
-.modal-conteudo {
-  padding: 20px;
-  font-size: 21.5px;
-  text-align: center;
-  align-items: center;
-  font-family: sans-serif;
-  height: 30vh;
-}
-
-.modal-conteudo h2 {
-  padding: 15px;
-  color: #da0808;
-  font-size: 65px;
-  margin-bottom: 15px;
-}
-
-.modal-conteudo button {
-  margin-top: 35px;
-  padding: 10px 20px 10px;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-#confirmar-modal {
-  padding: 15px;
-  background-color: #ad0707;
-}
-
-#fechar-modal {
-  padding: 15px;
-  background-color: #272626;
-
-}
-tbody tr:nth-child(even) {
-  background-image: linear-gradient(to top, #1d1d1d,#1d1d1d,#1d1d1d);
-}
-

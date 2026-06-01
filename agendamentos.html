@@ -1,78 +1,66 @@
-    <!DOCTYPE html>
-    <html lang="pt-BR">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Agendamentos</title>
-        <link rel="stylesheet" href="assets/css/agendamentos.css">
-    </head>
-    <body>
-        <div id="all">
-            <div class="banner">
-                <div class="banner-overlay"></div>
-                    <div class="banner-content">
-                        <h1 class="clientes-title">Clientes</h1>
-                        <p class="clientes-subtitle">Cadastre e acompanhe os clientes da mecânica.</p>
-                    </div>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamentos</title>
+    <link rel="stylesheet" href="assets/css/agendamentos.css">
+</head>
+<body>
+    <div id="all">
+        <div class="banner">
+            <div class="banner-overlay"></div>
+            <div class="banner-content">
+                <h1 class="agendamentos-title">Agendamentos</h1>
+                <p class="agendamentos-subtitle">Gerencie os agendamentos da mecânica.</p>
             </div>
-        
-                </div>
-        
-                <div class="form-card">
-                    <div class="campo">
-                        <div>
-                            <label for="nome">Nome</label>
-                        </div>
-                        <div>
-                            <input type="text" id="nome" name="nome" placeholder="Nome do cliente">
-                        </div>
-                    </div>
-        
-                    <div class="campo">
-                        <div>
-                            <label for="telefone">Telefone</label>
-                        </div>
-                        <input type="tel" id="telefone" name="telefone" placeholder="Telefone do cliente">
-                    </div>
-        
-                    <button id="botao-cadastrar">Cadastrar cliente</button>
-                </div>
-        
-                <table id="tabela-clientes">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nome</th>
-                            <th>Telefone</th>
-                            <th>Ações</th>
-                        </tr>
-                    </thead>
-        
-                    <tbody id="clientes">
-                        <tr>
-                            <td>1</td>
-                            <td>Alimentacao</td>
-                            <td>(00) 00000-0000</td>
-                            <td>
-                                <button class="botoes botao-editar">Editar</button>
-                                <button class="botoes botao-apagar">Apagar</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <dialog id="modal">
-                <div class="modal-conteudo">
-                    <h2>⚠️</h2>
-                    <p>APAGAR O CLIENTE?</p>
-                    
-                    <button id="fechar-modal">Cancelar</button>
-                    <button id="confirmar-modal">Confirmar</button>
-                </div>
-            </dialog>
-        
-            <script src="assets/js/agendamentos.js"></script>
         </div>
-    </body>
-    </html>
+
+        <div class="form-card">
+            <div class="campo">
+                <label for="cliente">Cliente</label>
+                <input type="text" id="cliente" name="cliente" placeholder="Nome do cliente">
+            </div>
+
+            <div class="campo">
+                <label for="descricao">Descrição</label>
+                <input type="text" id="descricao" name="descricao" placeholder="Ex: Troca de óleo">
+            </div>
+
+            <div class="campo">
+                <label for="data">Data</label>
+                <input type="date" id="data" name="data" placeholder="Ex: 26/10/2026">
+            </div>
+
+
+            <button id="botao-agendar">+ Agendar</button>
+        </div>
+
+        <table id="tabela-agendamentos">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Cliente</th>
+                    <th>Descrição</th>
+                    <th>Data</th>
+
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody id="agendamentos">
+                <tr>
+                    <td class="col-id">01</td>
+                    <td class="col-nome">Lorenzo</td>
+                    <td class="col-servico">Troca de óleo</td>
+                    <td>Data</td>
+                    <td>
+                        <button class="botao-editar">Editar</button>
+                        <button class="botao-apagar">Apagar</button>
+                    </td>
+                </tr>
+        </table>
+    </div>
+
+    <script src="assets/js/agendamentos.js"></script>
+</body>
+</html>
