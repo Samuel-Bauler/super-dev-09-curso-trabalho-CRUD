@@ -79,7 +79,7 @@ function criarLinha(cliente) {
     const linha = ` <tr>
     <td>${cliente.id}</td>
     <td>${cliente.nome}</td>
-    <td>${cliente.telefone}</td>
+    <td>${cliente.nome}</td>
     <td>
         <button class="botao-editar" cliente-id="${cliente.id}">Editar</button>
         <button class="botao-apagar" cliente-id="${cliente.id}">Apagar</button>
