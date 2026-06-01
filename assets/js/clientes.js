@@ -1,11 +1,11 @@
 const corpoTabela = document.getElementById("clientes");
-const urlBase = "https://api.franciscosensaulas.com/api/v1/mecanica/clientes"
+const urlBase = "https://api.franciscosensaulas.com/api/v1/mecanica/clientes";
 
 const botaoCadastrar = document.getElementById("botao-cadastrar");
 botaoCadastrar.addEventListener("click", validarECadastro);
 
-const campoNome = document.getElementById("nome")
-const campoTelefone = document.getElementById("telefone")
+const campoNome = document.getElementById("nome");
+const campoTelefone = document.getElementById("telefone");
 
 campoNome.addEventListener("keydown", function(evento) {
     if (evento.key === "Enter") {
@@ -19,25 +19,21 @@ campoTelefone.addEventListener("keydown", function(evento) {
     }
 });
 
-
 let idParaEditar = -1;
 let idSelecionadoParaApagar = null;
 
 function validarECadastro(evento){
     evento.preventDefault();
 
-    console.log(evento);
-
     const nome = campoNome.value.trim();
     const telefone = campoTelefone.value.trim();
 
     if(nome.length < 4){
-        alert("Cliente deve conter no mi­nimo 4 caracteres");
-
+        alert("Cliente deve conter no minimo 4 caracteres");
         return;
     }
     if(telefone.length < 1){
-        alert("Telefone não pode estar vazio")
+        alert("Telefone nao pode estar vazio");
         return;
     }
 
@@ -56,7 +52,6 @@ function limparCampos() {
 }
 
 function listarClientes() {
-
     corpoTabela.innerHTML = "";
 
     fetch(urlBase)
@@ -66,17 +61,16 @@ function listarClientes() {
                 const cliente = clientes[i];
                 criarLinha(cliente);
             }
-            adicionarCliqueBotoesLinhas()
+            adicionarCliqueBotoesLinhas();
         })
         .catch(error => {
             console.error("Erro ao listar clientes: " + error);
-
             alert("Ocorreu um erro ao tentar listar os clientes");
-        })
+        });
 }
 
 function criarLinha(cliente) {
-    const linha = ` <tr>
+    const linha = `<tr>
     <td>${cliente.id}</td>
     <td>${cliente.nome}</td>
     <td>${cliente.telefone}</td>
@@ -84,24 +78,25 @@ function criarLinha(cliente) {
         <button class="botao-editar" cliente-id="${cliente.id}">Editar</button>
         <button class="botao-apagar" cliente-id="${cliente.id}">Apagar</button>
     </td>
-</tr>`
+</tr>`;
 
     const botaoConfirmar = `
     <h2>⚠️</h2>
-            <p>DESEJA APAGAR O CLIENTE?</p>
-
-            <button id="fechar-modal">Cancelar</button>
-            <button id="confirmar-modal" cliente-id="${cliente.id}">Confirmar</button>`
+    <p>DESEJA APAGAR O CLIENTE?</p>
+    <button id="fechar-modal">Cancelar</button>
+    <button id="confirmar-modal" cliente-id="${cliente.id}">Confirmar</button>`;
 
     const modalConfirmar = document.getElementsByClassName("modal-conteudo")[0];
 
     corpoTabela.innerHTML = corpoTabela.innerHTML + linha;
 
-    modalConfirmar.innerHTML = botaoConfirmar;
+    if (modalConfirmar) {
+        modalConfirmar.innerHTML = botaoConfirmar;
+    }
 }
 
 function cadastrarCliente(){
-    const url = "https://api.franciscosensaulas.com/api/v1/mecanica/clientes"
+    const url = "https://api.franciscosensaulas.com/api/v1/mecanica/clientes";
 
     const nome = campoNome.value.trim();
     const telefone = campoTelefone.value.trim();
@@ -109,7 +104,7 @@ function cadastrarCliente(){
     const dados = {
         nome: nome,
         telefone: telefone
-    }
+    };
 
     fetch(url, {
         method: "POST",
@@ -118,15 +113,20 @@ function cadastrarCliente(){
         },
         body: JSON.stringify(dados)
     })
-    .then(response => response.json())
-    .then(dados => {
-        listarClientes();
-        alert("cliente cadastrado com sucesso");
-        limparCampos()
-    })
-    .catch(error => {
-        alert("Algo deu errado");
-    })
+        .then(response => {
+            if (response.status === 201) {
+                return response.json();
+            }
+        })
+        .then(dados => {
+            listarClientes();
+            alert("Cliente cadastrado com sucesso");
+            limparCampos();
+        })
+        .catch(error => {
+            console.error("Erro ao cadastrar cliente: " + error);
+            alert("Algo deu errado");
+        });
 }
 
 function adicionarCliqueBotoesLinhas() {
@@ -135,7 +135,7 @@ function adicionarCliqueBotoesLinhas() {
     for (let i = 0; i < botoesApagar.length; i++) {
         const botaoApagar = botoesApagar[i];
 
-        botaoApagar.addEventListener('click', () => {
+        botaoApagar.addEventListener("click", () => {
             idSelecionadoParaApagar = botaoApagar.getAttribute("cliente-id");
             modal.showModal();
         });
@@ -150,20 +150,24 @@ function adicionarCliqueBotoesLinhas() {
     }
 
     const fecharModal = document.getElementById("fechar-modal");
-    fecharModal.addEventListener('click', () => {
-        modal.close();
-        idSelecionadoParaApagar = null;
-    });
+    if (fecharModal) {
+        fecharModal.addEventListener("click", () => {
+            modal.close();
+            idSelecionadoParaApagar = null;
+        });
+    }
 
-    const botaoConfirmar = document.getElementById("confirmar-modal")
-    botaoConfirmar.addEventListener("click", () => {
-        apagarCliente(idSelecionadoParaApagar);
-        modal.close();
-    });
+    const botaoConfirmar = document.getElementById("confirmar-modal");
+    if (botaoConfirmar) {
+        botaoConfirmar.addEventListener("click", () => {
+            apagarCliente(idSelecionadoParaApagar);
+            modal.close();
+        });
+    }
 }
 
 function apagarCliente(id) {
-    const url = `${urlBase}/${id}`
+    const url = `${urlBase}/${id}`;
 
     fetch(url, {
         method: "DELETE"
@@ -171,17 +175,15 @@ function apagarCliente(id) {
         .then(response => {
             if (response.status === 204 || response.status === 200) {
                 alert("Cliente apagado com sucesso");
-
                 listarClientes();
             } else {
-                alert("NÃo foi possÃ­vel apagar o cliente");
+                alert("Nao foi possivel apagar o cliente");
             }
         })
         .catch(error => {
             console.error("Erro ao apagar cliente: " + error);
-
             alert("Ocorreu um erro ao tentar apagar o cliente");
-        })
+        });
 }
 
 function editarCliente(nome, telefone) {
@@ -190,35 +192,30 @@ function editarCliente(nome, telefone) {
     const dados = {
         nome: nome,
         telefone: telefone
-    }
+    };
 
     fetch(url, {
         method: "PUT",
-
         headers: {
             "Content-Type": "application/json"
         },
-
         body: JSON.stringify(dados)
     })
         .then(response => {
             if (response.status === 204 || response.status === 200) {
                 alert("Cliente atualizado com sucesso");
-
                 limparCampos();
-
                 listarClientes();
             } else if (response.status === 404) {
-                alert("NÃo foi possi­vel encontrar o cliente");
+                alert("Nao foi possivel encontrar o cliente");
             } else {
-                alert("NÃo foi possi­vel atualizar o cliente");
+                alert("Nao foi possivel atualizar o cliente");
             }
         })
         .catch(error => {
             console.error("Erro ao editar cliente: " + error);
-
             alert("Ocorreu um erro ao tentar alterar o cliente");
-        })
+        });
 }
 
 function preencherCamposParaEditar(evento) {
@@ -230,16 +227,14 @@ function preencherCamposParaEditar(evento) {
 
     fetch(url)
         .then(response => response.json())
-
         .then(cliente => {
             campoNome.value = cliente.nome;
             campoTelefone.value = cliente.telefone;
         })
         .catch(error => {
-            console.error("Erro ao buscar cliente para ediÃ§Ã£o: " + error);
-
+            console.error("Erro ao buscar cliente para edicao: " + error);
             alert("Ocorreu um erro ao tentar buscar o cliente");
-        })
+        });
 }
 
 listarClientes();

@@ -83,11 +83,6 @@ function listarAgendamentos() {
 }
 
 function criarLinha(agendamento) {
-    let nomeCliente = "";
-    if (agendamento.cliente != null) {
-        nomeCliente = agendamento.cliente.nome;
-    }
-
     let dataExibicao = "";
     if (agendamento.dataAgendamento != null) {
         dataExibicao = agendamento.dataAgendamento.substring(0, 10);
@@ -95,7 +90,7 @@ function criarLinha(agendamento) {
 
     const linha = `<tr>
     <td>${agendamento.id}</td>
-    <td>${nomeCliente}</td>
+    <td>${agendamento.cliente.nome}</td>
     <td>${agendamento.descricao}</td>
     <td>${dataExibicao}</td>
     <td>
@@ -123,26 +118,24 @@ function cadastrarAgendamento() {
     const urlClientes = "https://api.franciscosensaulas.com/api/v1/mecanica/clientes";
 
     fetch(urlClientes)
-        .then( response => response.json()) 
+        .then(response => response.json())
         .then(clientes => {
             let idDoCliente = 0;
 
             for (let i = 0; i < clientes.length; i++) {
-                const cliente = clientes[i];
-                if (cliente.nome === campoCliente.value.trim()) {
-                    idDoCliente = cliente.id;
+                const c = clientes[i];
+                if (c.nome === campoCliente.value.trim()) {
+                    idDoCliente = c.id;
                 }
             }
 
-            const cliente = campoCliente.value.trim();
-                        const descricao = campoDescricao.value.trim();
-                        const data = campoData.value.trim();
-                        const dataISO = new Date(Date.UTC(+data.substring(0,4), +data.substring(5,7) - 1, +data.substring(8,10), 0, 0, 0));
-                        const dataFormatada = dataISO.toISOString();
+            const data = campoData.value.trim();
+            const dataISO = new Date(Date.UTC(+data.substring(0,4), +data.substring(5,7) - 1, +data.substring(8,10), 0, 0, 0));
+            const dataFormatada = dataISO.toISOString();
 
             const dados = {
                 dataAgendamento: dataFormatada,
-                descricao: descricao,
+                descricao: campoDescricao.value.trim(),
                 clienteId: idDoCliente
             };
 
@@ -154,7 +147,7 @@ function cadastrarAgendamento() {
                 body: JSON.stringify(dados)
             })
                 .then(response => {
-                    if (response === 201) {
+                    if (response.status === 201) {
                         return response.json();
                     }
                 })
@@ -236,19 +229,19 @@ function editarAgendamento(cliente, descricao, data) {
             let idDoCliente = 0;
 
             for (let i = 0; i < clientes.length; i++) {
-                const cliente = clientes[i];
-                if (cliente.nome === cliente) {
-                    idDoCliente = cliente.id;
+                const c = clientes[i];
+                if (c.nome === cliente) {
+                    idDoCliente = c.id;
                 }
             }
 
             const url = `${urlBase}/${idParaEditar}`;
 
             const dados = {
-                            clienteId: idDoCliente,
-                            descricao: descricao,
-                            dataAgendamento: new Date(Date.UTC(+data.substring(0,4), +data.substring(5,7) - 1, +data.substring(8,10), 0, 0, 0)).toISOString()
-                        };
+                clienteId: idDoCliente,
+                descricao: descricao,
+                dataAgendamento: new Date(Date.UTC(+data.substring(0,4), +data.substring(5,7) - 1, +data.substring(8,10), 0, 0, 0)).toISOString()
+            };
 
             fetch(url, {
                 method: "PUT",
@@ -258,7 +251,7 @@ function editarAgendamento(cliente, descricao, data) {
                 body: JSON.stringify(dados)
             })
                 .then(response => {
-                    if (response === 201) {
+                    if (response.status === 200 || response.status === 201) {
                         return response.json();
                     }
                 })
@@ -290,9 +283,9 @@ function preencherCamposParaEditar(evento) {
                 campoCliente.value = "";
             }
             campoDescricao.value = agendamento.descricao;
-                        if (agendamento.dataAgendamento != null) {
-                            campoData.value = agendamento.dataAgendamento.substring(0, 10);
-                        }
+            if (agendamento.dataAgendamento != null) {
+                campoData.value = agendamento.dataAgendamento.substring(0, 10);
+            }
         })
         .catch(error => {
             console.error("Erro ao buscar agendamento para edição: " + error);
