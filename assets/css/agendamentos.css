@@ -6,7 +6,7 @@
 
 body {
   font-family: system-ui, sans-serif;
-  background: linear-gradient(to bottom, #000000 0%, #363535 40%, #3f3f3f 60%, #000000 100%);
+  background: linear-gradient(to left, #000000, #202020e0, #232323e2, #000000);
   min-height: 100vh;
   padding: 40px;
   color: #e8ddd0;
@@ -259,4 +259,60 @@ body {
   scale: 1.2;
   transition: all 0.3s;
   text-shadow: 0 0 5px black;
+}
+
+dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.65);
+}
+
+dialog {
+  border: none;
+  height: 40vh;
+  border-radius: 8px;
+  padding: 0;
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  background: #181818;
+  color: #e8e0d5;
+  box-shadow: 0 0px 7px 7px #d7b408;
+  width: 80%;
+  max-width: 700px;
+}
+
+
+.modal-conteudo {
+  padding: 20px;
+  font-size: 21.5px;
+  text-align: center;
+  align-items: center;
+  font-family: sans-serif;
+  height: 30vh;
+}
+
+.modal-conteudo h2 {
+  padding: 15px;
+  color: #da0808;
+  font-size: 65px;
+  margin-bottom: 15px;
+}
+
+.modal-conteudo button {
+  margin-top: 35px;
+  padding: 10px 20px 10px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+#confirmar-modal {
+  padding: 15px;
+  background-color: #ad0707;
+}
+
+#fechar-modal {
+  padding: 15px;
+  background-color: #272626;
+
 }

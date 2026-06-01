@@ -1,132 +1,171 @@
-const corpoTabela = document.getElementById("clientes");
-const urlBase = "https://api.franciscosensaulas.com/api/v1/mecanica/clientes"
+const corpoTabela = document.getElementById("agendamentos");
+const urlBase = "https://api.franciscosensaulas.com/api/v1/mecanica/agendamentos";
 
-const botaoCadastrar = document.getElementById("botao-cadastrar");
-botaoCadastrar.addEventListener("click", validarECadastro);
+const botaoAgendar = document.getElementById("botao-agendar");
+botaoAgendar.addEventListener("click", validarEAgendar);
 
-const campoNome = document.getElementById("nome")
-const campoTelefone = document.getElementById("telefone")
+const campoCliente = document.getElementById("cliente");
+const campoDescricao = document.getElementById("descricao");
+const campoData = document.getElementById("data");
 
-campoNome.addEventListener("keydown", function(evento) {
+campoCliente.addEventListener("keydown", function (evento) {
     if (evento.key === "Enter") {
-        validarECadastro(evento);
+        validarEAgendar(evento);
     }
 });
 
-campoTelefone.addEventListener("keydown", function(evento) {
+campoDescricao.addEventListener("keydown", function (evento) {
     if (evento.key === "Enter") {
-        validarECadastro(evento);
+        validarEAgendar(evento);
     }
 });
 
+campoData.addEventListener("keydown", function (evento) {
+    if (evento.key === "Enter") {
+        validarEAgendar(evento);
+    }
+});
 
 let idParaEditar = -1;
 let idSelecionadoParaApagar = null;
 
-function validarECadastro(evento){
+function validarEAgendar(evento) {
     evento.preventDefault();
 
-    console.log(evento);
+    const cliente = campoCliente.value.trim();
+    const descricao = campoDescricao.value.trim();
+    const data = campoData.value.trim();
 
-    const nome = campoNome.value.trim();
-    const telefone = campoTelefone.value.trim();
-
-    if(nome.length < 4){
-        alert("Cliente deve conter no mi­nimo 4 caracteres");
-
+    if (cliente.length < 4) {
+        alert("Nome do cliente deve conter no mínimo 4 caracteres");
         return;
     }
-    if(telefone.length < 1){
-        alert("Telefone não pode estar vazio")
+    if (descricao.length < 1) {
+        alert("Descrição não pode estar vazia");
+        return;
+    }
+    if (data.length < 1) {
+        alert("Data não pode estar vazia");
         return;
     }
 
     if (idParaEditar === -1) {
-        cadastrarCliente();
+        cadastrarAgendamento();
     } else {
-        editarCliente(nome, telefone);
+        editarAgendamento(cliente, descricao, data);
     }
 }
 
 function limparCampos() {
-    campoNome.value = "";
-    campoTelefone.value = "";
+    campoCliente.value = "";
+    campoDescricao.value = "";
+    campoData.value = "";
 
     idParaEditar = -1;
 }
 
-function listarClientes() {
-
+function listarAgendamentos() {
     corpoTabela.innerHTML = "";
 
     fetch(urlBase)
         .then(response => response.json())
-        .then(clientes => {
-            for (let i = 0; i < clientes.length; i++) {
-                const cliente = clientes[i];
-                criarLinha(cliente);
+        .then(agendamentos => {
+            for (let i = 0; i < agendamentos.length; i++) {
+                const agendamento = agendamentos[i];
+                criarLinha(agendamento);
             }
-            adicionarCliqueBotoesLinhas()
+            adicionarCliqueBotoesLinhas();
         })
         .catch(error => {
-            console.error("Erro ao listar clientes: " + error);
-
-            alert("Ocorreu um erro ao tentar listar os clientes");
-        })
+            console.error("Erro ao listar agendamentos: " + error);
+            alert("Ocorreu um erro ao tentar listar os agendamentos");
+        });
 }
 
-function criarLinha(cliente) {
-    const linha = ` <tr>
-    <td>${cliente.id}</td>
-    <td>${cliente.nome}</td>
-    <td>${cliente.nome}</td>
+function criarLinha(agendamento) {
+    var nomeCliente = "";
+    if (agendamento.cliente != null) {
+        nomeCliente = agendamento.cliente.nome;
+    }
+
+    const linha = `<tr>
+    <td>${agendamento.id}</td>
+    <td>${nomeCliente}</td>
+    <td>${agendamento.descricao}</td>
+    <td>${agendamento.dataAgendamento}</td>
     <td>
-        <button class="botao-editar" cliente-id="${cliente.id}">Editar</button>
-        <button class="botao-apagar" cliente-id="${cliente.id}">Apagar</button>
+        <button class="botao-editar" agendamento-id="${agendamento.id}">Editar</button>
+        <button class="botao-apagar" agendamento-id="${agendamento.id}">Apagar</button>
     </td>
-</tr>`
+</tr>`;
 
     const botaoConfirmar = `
     <h2>⚠️</h2>
-            <p>DESEJA APAGAR O CLIENTE?</p>
-
-            <button id="fechar-modal">Cancelar</button>
-            <button id="confirmar-modal" cliente-id="${cliente.id}">Confirmar</button>`
+    <p>DESEJA APAGAR O AGENDAMENTO?</p>
+    <button id="fechar-modal">Cancelar</button>
+    <button id="confirmar-modal" agendamento-id="${agendamento.id}">Confirmar</button>`;
 
     const modalConfirmar = document.getElementsByClassName("modal-conteudo")[0];
 
     corpoTabela.innerHTML = corpoTabela.innerHTML + linha;
 
-    modalConfirmar.innerHTML = botaoConfirmar;
+    if (modalConfirmar) {
+        modalConfirmar.innerHTML = botaoConfirmar;
+    }
 }
 
-function cadastrarCliente(){
-    const url = "https://api.franciscosensaulas.com/api/v1/mecanica/clientes"
+function cadastrarAgendamento() {
+    const urlClientes = "https://api.franciscosensaulas.com/api/v1/mecanica/clientes";
 
-    const nome = campoNome.value.trim();
-    const telefone = campoTelefone.value.trim();
+    fetch(urlClientes)
+        .then( response => response.json()) 
+        .then(clientes => {
+            let idDoCliente = 0;
 
-    const dados = {
-        nome: nome,
-        telefone: telefone
-    }
+            for (let i = 0; i < clientes.length; i++) {
+                const cliente = clientes[i];
+                if (cliente.nome === campoCliente.value.trim()) {
+                    idDoCliente = cliente.id;
+                }
+            }
 
-    fetch(url, {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(dados)
-    })
-    .then(response => response.json())
-    .then(dados => {
-        listarClientes();
-        alert("cliente cadastrado com sucesso");
-        limparCampos()
-    })
-    .catch(error => {
-        alert("Algo deu errado");
-    })
+            const cliente = campoCliente.value.trim();
+            const descricao = campoDescricao.value.trim();
+            const data = campoData.value.trim();
+            const dataISO = new Date(Date.UTC(+data.substring(0,4), +data.substring(5,7) - 1, +data.substring(8,10), 0, 0, 0));
+            const dataFormatada = dataISO.toISOString();
+
+            const dados = {
+                dataAgendamento: dataFormatada,
+                descricao: descricao,
+                clienteId: idDoCliente
+            };
+
+            fetch(urlBase, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dados)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        console.error("Response status: " + response.status);
+                        throw new Error("Response not ok");
+                    }
+                })
+                .then(dados => {
+                    listarAgendamentos();
+                    alert("Agendamento cadastrado com sucesso");
+                    limparCampos();
+                })
+                .catch(error => {
+                    console.error("Erro ao cadastrar agendamento: " + error);
+                    alert("Algo deu errado");
+                });
+        });
 }
 
 function adicionarCliqueBotoesLinhas() {
@@ -135,8 +174,8 @@ function adicionarCliqueBotoesLinhas() {
     for (let i = 0; i < botoesApagar.length; i++) {
         const botaoApagar = botoesApagar[i];
 
-        botaoApagar.addEventListener('click', () => {
-            idSelecionadoParaApagar = botaoApagar.getAttribute("cliente-id");
+        botaoApagar.addEventListener("click", () => {
+            idSelecionadoParaApagar = botaoApagar.getAttribute("agendamento-id");
             modal.showModal();
         });
     }
@@ -150,96 +189,116 @@ function adicionarCliqueBotoesLinhas() {
     }
 
     const fecharModal = document.getElementById("fechar-modal");
-    fecharModal.addEventListener('click', () => {
-        modal.close();
-        idSelecionadoParaApagar = null;
-    });
+    if (fecharModal) {
+        fecharModal.addEventListener("click", () => {
+            modal.close();
+            idSelecionadoParaApagar = null;
+        });
+    }
 
-    const botaoConfirmar = document.getElementById("confirmar-modal")
-    botaoConfirmar.addEventListener("click", () => {
-        apagarCliente(idSelecionadoParaApagar);
-        modal.close();
-    });
+    const botaoConfirmar = document.getElementById("confirmar-modal");
+    if (botaoConfirmar) {
+        botaoConfirmar.addEventListener("click", () => {
+            apagarAgendamento(idSelecionadoParaApagar);
+            modal.close();
+        });
+    }
 }
 
-function apagarCliente(id) {
-    const url = `${urlBase}/${id}`
+function apagarAgendamento(id) {
+    const url = `${urlBase}/${id}`;
 
     fetch(url, {
         method: "DELETE"
     })
         .then(response => {
             if (response.status === 204 || response.status === 200) {
-                alert("Cliente apagado com sucesso");
-
-                listarClientes();
+                alert("Agendamento apagado com sucesso");
+                listarAgendamentos();
             } else {
-                alert("NÃo foi possÃ­vel apagar o cliente");
+                alert("Não foi possível apagar o agendamento");
             }
         })
         .catch(error => {
-            console.error("Erro ao apagar cliente: " + error);
-
-            alert("Ocorreu um erro ao tentar apagar o cliente");
-        })
+            console.error("Erro ao apagar agendamento: " + error);
+            alert("Ocorreu um erro ao tentar apagar o agendamento");
+        });
 }
 
-function editarCliente(nome, telefone) {
-    const url = `${urlBase}/${idParaEditar}`;
+function editarAgendamento(cliente, descricao, data) {
+    const urlClientes = "https://api.franciscosensaulas.com/api/v1/mecanica/clientes";
 
-    const dados = {
-        nome: nome,
-        telefone: telefone
-    }
+    fetch(urlClientes)
+        .then(response => response.json())
+        .then(clientes => {
+            let idDoCliente = 0;
 
-    fetch(url, {
-        method: "PUT",
-
-        headers: {
-            "Content-Type": "application/json"
-        },
-
-        body: JSON.stringify(dados)
-    })
-        .then(response => {
-            if (response.status === 204 || response.status === 200) {
-                alert("Cliente atualizado com sucesso");
-
-                limparCampos();
-
-                listarClientes();
-            } else if (response.status === 404) {
-                alert("NÃo foi possi­vel encontrar o cliente");
-            } else {
-                alert("NÃo foi possi­vel atualizar o cliente");
+            for (let i = 0; i < clientes.length; i++) {
+                const c = clientes[i];
+                if (c.nome === cliente) {
+                    idDoCliente = c.id;
+                }
             }
-        })
-        .catch(error => {
-            console.error("Erro ao editar cliente: " + error);
 
-            alert("Ocorreu um erro ao tentar alterar o cliente");
-        })
+            const url = `${urlBase}/${idParaEditar}`;
+
+            const dados = {
+                clienteId: idDoCliente,
+                descricao: descricao,
+                dataAgendamento: new Date(Date.UTC(+data.substring(0,4), +data.substring(5,7) - 1, +data.substring(8,10), 0, 0, 0)).toISOString()
+            };
+
+            fetch(url, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(dados)
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        console.error("Response status: " + response.status);
+                        throw new Error("Response not ok");
+                    }
+                })
+                .then(() => {
+                    alert("Agendamento atualizado com sucesso");
+                    limparCampos();
+                    listarAgendamentos();
+                })
+                .catch(error => {
+                    console.error("Erro ao editar agendamento: " + error);
+                    alert("Ocorreu um erro ao tentar alterar o agendamento");
+                });
+        });
 }
 
 function preencherCamposParaEditar(evento) {
     const botaoEditar = evento.target;
 
-    idParaEditar = botaoEditar.getAttribute("cliente-id");
+    idParaEditar = botaoEditar.getAttribute("agendamento-id");
 
     const url = `${urlBase}/${idParaEditar}`;
 
     fetch(url)
         .then(response => response.json())
-
-        .then(cliente => {
-            campoNome.value = cliente.nome;
-            campoTelefone.value = cliente.telefone;
+        .then(agendamento => {
+            if (agendamento.cliente != null) {
+                campoCliente.value = agendamento.cliente.nome;
+            } else {
+                campoCliente.value = "";
+            }
+            campoDescricao.value = agendamento.descricao;
+            var dataISO = agendamento.dataAgendamento;
+            var dataFormatada = dataISO.substring(0, 10);
+            campoData.value = dataFormatada;
         })
         .catch(error => {
-            console.error("Erro ao buscar cliente para ediÃ§Ã£o: " + error);
-
-            alert("Ocorreu um erro ao tentar buscar o cliente");
-        })
+            console.error("Erro ao buscar agendamento para edição: " + error);
+            alert("Ocorreu um erro ao tentar buscar o agendamento");
+        });
 }
 
-listarClientes();
+listarAgendamentos();
