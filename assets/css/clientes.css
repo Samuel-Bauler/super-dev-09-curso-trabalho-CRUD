@@ -240,6 +240,7 @@ dialog::backdrop {
 
 dialog {
   border: none;
+  height: 40vh;
   border-radius: 8px;
   padding: 0;
   position: fixed;
@@ -247,14 +248,15 @@ dialog {
   margin: auto;
   background: #181818;
   color: #e8e0d5;
-  box-shadow: 0 16px 30px #000000;
-  width: 90%;
+  box-shadow: 0 3px 7px 7px #d7b408;
+  width: 60%;
   max-width: 400px;
 }
 
 
 .modal-conteudo {
   padding: 20px;
+  font-size: 21.5px;
   text-align: center;
   align-items: center;
   font-family: sans-serif;
@@ -264,6 +266,8 @@ dialog {
 .modal-conteudo h2 {
   padding: 15px;
   color: #da0808;
+  font-size: 65px;
+  margin-bottom: 15px;
 }
 
 .modal-conteudo button {
@@ -283,6 +287,7 @@ dialog {
 #fechar-modal {
   padding: 15px;
   background-color: #272626;
+
 }
 tbody tr:nth-child(even) {
   background-image: linear-gradient(to top, #1d1d1d,#1d1d1d,#1d1d1d);

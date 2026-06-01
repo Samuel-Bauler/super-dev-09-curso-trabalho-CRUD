@@ -87,8 +87,8 @@ function criarLinha(cliente) {
 </tr>`
 
     const botaoConfirmar = `
-    <h2>DESEJA APAGAR O CLIENTE?</h2>
-            <p>Isso apagará permanentemente o cliente da lista</p>
+    <h2>⚠️</h2>
+            <p>DESEJA APAGAR O CLIENTE?</p>
 
             <button id="fechar-modal">Cancelar</button>
             <button id="confirmar-modal" cliente-id="${cliente.id}">Confirmar</button>`
