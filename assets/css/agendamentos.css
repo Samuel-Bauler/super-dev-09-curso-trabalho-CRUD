@@ -237,9 +237,10 @@ dialog {
   margin: auto;
   background: #181818;
   color: #e8e0d5;
-  box-shadow: 0 0px 7px 7px #d7b408;
-  width: 80%;
-  max-width: 700px;
+  box-shadow: 0 3px 7px 7px #d7b408;
+  width: 60%;
+  width: 90%;
+  max-width: 400px;
 }
 
 
@@ -281,24 +282,4 @@ dialog {
 tbody tr:nth-child(even) {
   background-image: linear-gradient(to top, #1d1d1d,#1d1d1d,#1d1d1d);
 }
-
-.botao-agendamentos {
-  display: inline-block;
-  text-align: center;
-  width: 100%;
-  padding: 9px 20px;
-  color: #fff;
-  border-radius: 8px;
-  font-size: 13px;
-  font-weight: 600;
-  text-decoration: none;
-  transition: background 0.15s, transform 0.1s;
-  
-}
-
-.botao-agendamentos:hover {
-  text-decoration: underline rgba(163, 108, 4, 0.858);
-  transform: scale(1.03);
-}
-
 
