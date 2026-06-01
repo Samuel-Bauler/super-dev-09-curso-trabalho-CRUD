@@ -14,6 +14,15 @@ campoCliente.addEventListener("keydown", function (evento) {
     }
 });
 
+
+///campoCliente.addEventListener("keydown", teclaApertadaEnter)
+
+//function teclaApertadaEnter(evento){
+//    if (evento.key === "Enter") {
+//        validarEAgendar(evento);
+//    }
+//}
+
 campoDescricao.addEventListener("keydown", function (evento) {
     if (evento.key === "Enter") {
         validarEAgendar(evento);
