@@ -201,13 +201,62 @@ body {
   margin-right: 6px;
 }
 
-.botao-editar:hover {
+.botao-editar{
   border-color: #dc6414;
-  color: #dc6414;
+  background-color: #dc6414;
+  color: black;
 }
 
-.botao-apagar:hover {
-  border-color: #e24b4a;
-  color: #e24b4a;
-  background: rgba(226, 75, 74, 0.06);
+.botao-apagar{
+  background-color: red;
+  color: black;
+}
+
+.botao-agendamentos {
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  padding: 9px 20px;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+  
+}
+
+.botao-agendamentos:hover {
+  text-decoration: underline rgba(163, 108, 4, 0.858);
+  transform: scale(1.03);
+}
+
+.nav-bar {
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+  margin-bottom: 20px;
+  gap: 70px;
+}
+
+
+.agendamentos, .clientes {
+  display: inline-flexbox;
+  text-align: center;
+  padding: 10px;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.1s;
+  align-self: center;
+  font-size: 30px;
+  transition: all 0.3s;
+}
+
+.nav-bar a:hover{
+  color: orange;
+  scale: 1.2;
+  transition: all 0.3s;
+  text-shadow: 0 0 5px black;
 }
