@@ -73,7 +73,18 @@ function criarLinha(cliente) {
     </td>
 </tr>`
 
+    const botaoConfirmar = `
+    <h2>DESEJA APAGAR O CLIENTE?</h2>
+            <p>Isso apagará permanentemente o cliente da lista</p>
+            
+            <button id="fechar-modal">Cancelar</button>
+            <button id="confirmar-modal" cliente-id="${cliente.id}">Confirmar</button>`
+
+    const modalConfirmar = document.getElementsByClassName("modal-conteudo")[0];
+
     corpoTabela.innerHTML = corpoTabela.innerHTML + linha;
+
+    modalConfirmar.innerHTML = botaoConfirmar;
 }
 
 function cadastrarCliente(){
@@ -105,10 +116,14 @@ function cadastrarCliente(){
     })
 }
 
+const fecharModal = document.getElementById("fechar-modal");
+const modal = document.getElementById("modal");
+
 
 function adicionarCliqueBotoesLinhas() {
     const botoesApagar = document.getElementsByClassName("botao-apagar");
-    const modal = document.getElementById("modal");
+    
+    const botaoConfirmar = document.getElementById("confirmar-modal")
 
     for (let i = 0; i < botoesApagar.length; i++) {
         const botaoApagar = botoesApagar[i];
@@ -120,6 +135,8 @@ function adicionarCliqueBotoesLinhas() {
         fecharModal.addEventListener('click', () => {
             modal.close(); 
         });
+
+        botaoConfirmar.addEventListener("click", apagarCliente)
     }
 
     const botoesEditar = document.getElementsByClassName("botao-editar");
@@ -129,6 +146,33 @@ function adicionarCliqueBotoesLinhas() {
 
         botaoEditar.addEventListener("click", preencherCamposParaEditar);
     }
+}
+
+function apagarCliente(evento) {
+    modal.close();
+    const botaoApagar = evento.target;
+
+    const idParaApagar = botaoApagar.getAttribute("cliente-id");
+
+    const url = `${urlBase}/${idParaApagar}`
+
+    fetch(url, {
+        method: "DELETE"
+    })
+        .then(response => {
+            if (response.status === 204 || response.status === 200) {
+                alert("Cliente apagado com sucesso");
+
+                listarClientes();
+            } else {
+                alert("NÃ£o foi possÃ­vel apagar o cliente");
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao apagar cliente: " + error);
+
+            alert("Ocorreu um erro ao tentar apagar o cliente");
+        })
 }
     
 function editarCliente(nome, telefone) {
