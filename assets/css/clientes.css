@@ -20,6 +20,8 @@ body {
   background-position: center;
   border-radius: 16px;
   margin-bottom: 32px;
+  margin-left: 17px;
+  margin-right: 17px;
 }
 
 .banner-overlay {
@@ -153,7 +155,7 @@ body {
 
 #tabela-clientes thead th {
   padding: 12px 20px;
-  text-align: left;
+  text-align: center;
   font-size: 10px;
   font-weight: 600;
   letter-spacing: 2.5px;
@@ -182,6 +184,7 @@ body {
   font-size: 14px;
   color: #e8e0d5;
   vertical-align: middle;
+  text-align: center;
 }
 
 
@@ -212,12 +215,8 @@ body {
 }
 
 #tabela-clientes {
-  width: calc(100% - 32px);
-  margin: 0 16px 24px;
-}
-
-.banner {
-  padding: 20px 16px;
+  width: calc(100% - 34px);
+  margin: 0 17px 24px;
 }
 
 dialog::backdrop {
