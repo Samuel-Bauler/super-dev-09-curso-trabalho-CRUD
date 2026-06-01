@@ -164,7 +164,7 @@ body {
 #tabela-clientes tbody tr {
   border-bottom: 1px solid #1e1e1e;
   transition: background 0.15s;
-  
+
 }
 
 #tabela-clientes tbody tr {
@@ -247,19 +247,29 @@ dialog {
   text-align: center;
   align-items: center;
   font-family: sans-serif;
+  height: 30vh;
 }
 
 .modal-conteudo h2 {
-  margin-top: 0;
-  color: #dc6414;
+  padding: 15px;
+  color: #da0808;
 }
 
 .modal-conteudo button {
-  margin-top: 15px;
-  padding: 10px 20px;
-  background-color: #dc6414;
+  margin-top: 35px;
+  padding: 10px 20px 10px;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+}
+
+#confirmar-modal {
+  padding: 15px;
+  background-color: #ad0707;
+}
+
+#fechar-modal {
+  padding: 15px;
+  background-color: #272626;
 }
