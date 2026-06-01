@@ -9,6 +9,7 @@ const campoTelefone = document.getElementById("telefone")
 
 
 let idParaEditar = -1;
+let idSelecionadoParaApagar = null;
 
 function abrirTelaIndex() {
     window.location.href = "index.html"
@@ -76,7 +77,7 @@ function criarLinha(cliente) {
     const botaoConfirmar = `
     <h2>DESEJA APAGAR O CLIENTE?</h2>
             <p>Isso apagará permanentemente o cliente da lista</p>
-            
+
             <button id="fechar-modal">Cancelar</button>
             <button id="confirmar-modal" cliente-id="${cliente.id}">Confirmar</button>`
 
@@ -92,7 +93,7 @@ function cadastrarCliente(){
 
     const nome = campoNome.value.trim();
     const telefone = campoTelefone.value.trim();
-    
+
     const dados = {
         nome: nome,
         telefone: telefone
@@ -116,27 +117,16 @@ function cadastrarCliente(){
     })
 }
 
-const fecharModal = document.getElementById("fechar-modal");
-const modal = document.getElementById("modal");
-
-
 function adicionarCliqueBotoesLinhas() {
     const botoesApagar = document.getElementsByClassName("botao-apagar");
-    
-    const botaoConfirmar = document.getElementById("confirmar-modal")
 
     for (let i = 0; i < botoesApagar.length; i++) {
         const botaoApagar = botoesApagar[i];
 
         botaoApagar.addEventListener('click', () => {
+            idSelecionadoParaApagar = botaoApagar.getAttribute("cliente-id");
             modal.showModal();
         });
-
-        fecharModal.addEventListener('click', () => {
-            modal.close(); 
-        });
-
-        botaoConfirmar.addEventListener("click", apagarCliente)
     }
 
     const botoesEditar = document.getElementsByClassName("botao-editar");
@@ -146,15 +136,22 @@ function adicionarCliqueBotoesLinhas() {
 
         botaoEditar.addEventListener("click", preencherCamposParaEditar);
     }
+
+    const fecharModal = document.getElementById("fechar-modal");
+    fecharModal.addEventListener('click', () => {
+        modal.close();
+        idSelecionadoParaApagar = null;
+    });
+
+    const botaoConfirmar = document.getElementById("confirmar-modal")
+    botaoConfirmar.addEventListener("click", () => {
+        apagarCliente(idSelecionadoParaApagar);
+        modal.close();
+    });
 }
 
-function apagarCliente(evento) {
-    modal.close();
-    const botaoApagar = evento.target;
-
-    const idParaApagar = botaoApagar.getAttribute("cliente-id");
-
-    const url = `${urlBase}/${idParaApagar}`
+function apagarCliente(id) {
+    const url = `${urlBase}/${id}`
 
     fetch(url, {
         method: "DELETE"
@@ -165,7 +162,7 @@ function apagarCliente(evento) {
 
                 listarClientes();
             } else {
-                alert("NÃ£o foi possÃ­vel apagar o cliente");
+                alert("NÃo foi possÃ­vel apagar o cliente");
             }
         })
         .catch(error => {
@@ -174,7 +171,7 @@ function apagarCliente(evento) {
             alert("Ocorreu um erro ao tentar apagar o cliente");
         })
 }
-    
+
 function editarCliente(nome, telefone) {
     const url = `${urlBase}/${idParaEditar}`;
 
@@ -200,9 +197,9 @@ function editarCliente(nome, telefone) {
 
                 listarClientes();
             } else if (response.status === 404) {
-                alert("NÃ£o foi possi­vel encontrar o cliente");
+                alert("NÃo foi possi­vel encontrar o cliente");
             } else {
-                alert("NÃ£o foi possi­vel atualizar o cliente");
+                alert("NÃo foi possi­vel atualizar o cliente");
             }
         })
         .catch(error => {
@@ -234,7 +231,3 @@ function preencherCamposParaEditar(evento) {
 }
 
 listarClientes();
-
-fecharModal.addEventListener('click', () => {
-  modal.close(); // Método nativo para fechar modais
-});
