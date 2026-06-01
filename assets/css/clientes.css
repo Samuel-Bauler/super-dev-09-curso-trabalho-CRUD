@@ -172,7 +172,7 @@ body {
 }
 
 #tabela-clientes tbody tr:hover {
-  background: #1d1d1d;
+  background: #434343;
 }
 
 #tabela-clientes tbody td {
@@ -197,6 +197,17 @@ body {
   font-family: 'DM Sans', sans-serif;
   transition: border-color 0.15s, color 0.15s, background 0.15s;
   margin-right: 6px;
+}
+
+.botao-editar{
+  border-color: #dc6414;
+  background-color: #dc6414;
+  color: black;
+}
+
+.botao-apagar{
+  background-color: red;
+  color: black;
 }
 
 .botao-editar:hover {
@@ -272,4 +283,7 @@ dialog {
 #fechar-modal {
   padding: 15px;
   background-color: #272626;
+}
+tbody tr:nth-child(even) {
+  background-image: linear-gradient(to top, #1d1d1d,#1d1d1d,#1d1d1d);
 }
