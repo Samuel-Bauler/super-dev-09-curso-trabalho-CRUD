@@ -7,13 +7,21 @@ botaoCadastrar.addEventListener("click", validarECadastro);
 const campoNome = document.getElementById("nome")
 const campoTelefone = document.getElementById("telefone")
 
+campoNome.addEventListener("keydown", function(evento) {
+    if (evento.key === "Enter") {
+        validarECadastro(evento);
+    }
+});
+
+campoTelefone.addEventListener("keydown", function(evento) {
+    if (evento.key === "Enter") {
+        validarECadastro(evento);
+    }
+});
+
 
 let idParaEditar = -1;
 let idSelecionadoParaApagar = null;
-
-function abrirTelaIndex() {
-    window.location.href = "index.html"
-}
 
 function validarECadastro(evento){
     evento.preventDefault();
@@ -27,6 +35,9 @@ function validarECadastro(evento){
         alert("Cliente deve conter no mi­nimo 4 caracteres");
 
         return;
+    }
+    if(telefone.length < 1){
+        alert("Telefone não pode estar vazio")
     }
 
     if (idParaEditar === -1) {
