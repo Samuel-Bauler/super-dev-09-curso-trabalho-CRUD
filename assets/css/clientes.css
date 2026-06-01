@@ -237,10 +237,9 @@ dialog {
   margin: auto;
   background: #181818;
   color: #e8e0d5;
-  box-shadow: 0 3px 7px 7px #d7b408;
-  width: 60%;
-  width: 90%;
-  max-width: 400px;
+  box-shadow: 0 0px 7px 7px #d7b408;
+  width: 80%;
+  max-width: 700px;
 }
 
 
